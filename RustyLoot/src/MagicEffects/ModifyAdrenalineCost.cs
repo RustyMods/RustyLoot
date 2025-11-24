@@ -25,9 +25,13 @@ public static class ModifyAdrenalineCost
     {
         private static void Postfix(Player __instance, ref float __result)
         {
+            if (!DefinitionExtensions.IsEnabled("ModifyAdrenalineCost")) return;
+
             if (__instance.HasActiveMagicEffect("ModifyAdrenalineCost", out float modifier))
             {
-                __result = Mathf.Min(0, __result * Mathf.Clamp01(1f - modifier / 100));
+                // Reduce the cost by a percentage (modifier represents % reduction)
+                float reduction = 1f - modifier / 100f;
+                __result *= Mathf.Clamp(reduction, 0.5f, 1f); // Cap at 50% reduction max
             }
         }
     }

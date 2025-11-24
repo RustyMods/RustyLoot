@@ -24,6 +24,8 @@ public static class Honeybound
     {
         private static void Postfix(Player __instance, ItemDrop.ItemData item, bool __result)
         {
+            if (!DefinitionExtensions.IsEnabled("Honeybound")) return;
+
             if (!__result) return;
             
             if (__instance.HasActiveMagicEffect("Honeybound", out float modifier))

@@ -43,6 +43,9 @@ public class Rejuvenate
     {
         private static void Postfix(Character __instance, HitData hit)
         {
+            if (!DefinitionExtensions.IsEnabled("Rejuvenate")) return;
+
+            RustyLootPlugin.RustyLootLogger.LogWarning("Rejuvenate");
             if (hit.GetAttacker() is not Player player) return;
             if (player.HasActiveMagicEffect("Rejuvenate", out float modifier))
             {
@@ -53,6 +56,7 @@ public class Rejuvenate
                 {
                     player.GetSEMan().AddStatusEffect("SE_Rejuvenate".GetStableHashCode(), true, 0, fifteenPercent);
                     player.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
+                    RustyLootPlugin.RustyLootLogger.LogWarning($"Rejuvenate {fifteenPercent}");
                 }
             }
         }

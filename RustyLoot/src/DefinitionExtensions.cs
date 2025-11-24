@@ -37,6 +37,10 @@ public static class DefinitionExtensions
     private static readonly string effectFolderPath = Path.Combine(folderPath, effectFolderName);
 
     private static readonly Dictionary<string, MagicItemEffectDefinition> files = new();
+    private static readonly Dictionary<string, ConfigEntry<Toggle>> noRollConfigs = new();
+
+    public static bool IsEnabled(string effectType) =>
+        noRollConfigs.TryGetValue(effectType, out ConfigEntry<Toggle> noRollConfig) && noRollConfig.Value is Toggle.On;
 
     public static void Serialize(this MagicItemEffectDefinition definition)
     {
@@ -54,6 +58,14 @@ public static class DefinitionExtensions
             string json = JsonConvert.SerializeObject(definition, serializationSettings);
             File.WriteAllText(filePath, json);
         }
+
+        ConfigEntry<Toggle> noRollConfig = RustyLootPlugin.config("Magic Effects", definition.Type, Toggle.On, $"If on, {definition.Type} has chance to roll");
+        noRollConfig.SettingChanged += (_, _) =>
+        {
+            definition.Requirements.NoRoll = noRollConfig.Value is Toggle.Off;
+            definition.Update();
+        };
+        noRollConfigs[definition.Type] = noRollConfig;
     }
 
     public static void Deserialize(string filePath)

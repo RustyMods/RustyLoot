@@ -169,6 +169,7 @@ public static class MagicProjectiles
         private static bool Prefix(Humanoid character, ItemDrop.ItemData weapon, ref bool __result)
         {
             if (character is not Player player) return true;
+            if (weapon.m_shared.m_skillType is not (Skills.SkillType.Bows or Skills.SkillType.Crossbows)) return true;
             if (string.IsNullOrEmpty(weapon.m_shared.m_ammoType)) return true;
             if (player.GetAmmoItem() is { } ammoItem && player.GetInventory().ContainsItem(ammoItem) && ammoItem.m_shared.m_ammoType == weapon.m_shared.m_ammoType) return true;
 
@@ -180,7 +181,10 @@ public static class MagicProjectiles
             {
                 if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicBolt", out float _) || !player.HaveEitr(boltEitrCost)) return true;
             }
-            else return true;
+            else
+            {
+                return true;
+            }
 
             __result = true;
             return false;
@@ -192,7 +196,11 @@ public static class MagicProjectiles
     {
         private static void Postfix(Humanoid character, ItemDrop.ItemData weapon, ref ItemDrop.ItemData? __result)
         {
+            if (!DefinitionExtensions.IsEnabled("MagicArrow") && !DefinitionExtensions.IsEnabled("MagicBolt")) return;
+
             if (__result != null || character is not Player player) return;
+            if (weapon.m_shared.m_skillType is not (Skills.SkillType.Bows or Skills.SkillType.Crossbows)) return;
+
             if (arrow != null && arrow.m_itemData.m_shared.m_ammoType == weapon.m_shared.m_ammoType)
             {
                 if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicArrow", out float _) || !player.HaveEitr(arrowEitrCost)) return;
@@ -211,6 +219,8 @@ public static class MagicProjectiles
     {
         private static bool Prefix(Attack __instance, ref bool __result)
         {
+            if (!DefinitionExtensions.IsEnabled("MagicArrow") && !DefinitionExtensions.IsEnabled("MagicBolt")) return true;
+
             if (__instance.m_character is not Player player) return true;
             if (player.GetAmmoItem() is {} ammo && ammo.m_shared.m_ammoType == __instance.m_weapon.m_shared.m_ammoType) return true;
 
@@ -224,12 +234,15 @@ public static class MagicProjectiles
             }            
             else if (bolt != null && __instance.m_weapon.m_shared.m_ammoType == bolt.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, __instance.m_weapon, "MagicBolt", out float _) || !player.HaveEitr(boltEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, __instance.m_weapon, "MagicBolt", out float _) ||
+                    !player.HaveEitr(boltEitrCost)) return true;
 
                 __result = true;
                 __instance.m_ammoItem = bolt.m_itemData.Clone();
                 player.UseEitr(boltEitrCost);
             }
+            else return true;
+            
             return false;
         }
     }
@@ -239,6 +252,8 @@ public static class MagicProjectiles
     {
         private static bool Prefix(Humanoid character, ItemDrop.ItemData weapon, ref bool __result)
         {
+            if (!DefinitionExtensions.IsEnabled("MagicArrow") && !DefinitionExtensions.IsEnabled("MagicBolt")) return true;
+
             if (character is not Player player) return true;
 
             if (player.GetInventory().GetAmmoItem(weapon.m_shared.m_ammoType) is {} ammo && ammo.m_shared.m_ammoType == weapon.m_shared.m_ammoType) return true;
@@ -249,8 +264,7 @@ public static class MagicProjectiles
             }
             else if (bolt != null && weapon.m_shared.m_ammoType == bolt.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicBolt", out float _) ||
-                    !player.HaveEitr(boltEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicBolt", out float _) || !player.HaveEitr(boltEitrCost)) return true;
             }
             else return true;
             

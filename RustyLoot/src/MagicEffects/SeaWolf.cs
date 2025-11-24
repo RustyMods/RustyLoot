@@ -24,9 +24,13 @@ public class SeaWolf
     {
         private static void Prefix(Character __instance, HitData hit)
         {
-            if (hit.GetAttacker() is Player player && player.HasActiveMagicEffect("SeaWolf", out float modifier) && EnvMan.IsWet())
+            if (!DefinitionExtensions.IsEnabled("SeaWolf")) return;
+
+            if (hit.GetAttacker() is Player player && player.HasActiveMagicEffect("SeaWolf", out float modifier) && player.GetSEMan().HaveStatusEffect(SEMan.s_statusEffectWet))
             {
-                hit.ApplyModifier(1 + modifier / 100);
+                var mod = 1 + modifier / 100;
+                hit.ApplyModifier(mod);
+                RustyLootPlugin.RustyLootLogger.LogWarning($"SeaWolf.RPC_Damage modifier: {mod}");
             }
         }
     }

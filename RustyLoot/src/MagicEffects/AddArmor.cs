@@ -9,10 +9,8 @@ public static class AddArmor
     public static void Setup()
     {
         var def = new MagicItemEffectDefinition("AddArmor", "$mod_epicloot_addarmor", "$mod_epicloot_addarmor_desc");
-        def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Chest,
-            ItemDrop.ItemData.ItemType.Legs, ItemDrop.ItemData.ItemType.Shoulder);
-        def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary,
-            ItemRarity.Mythic);
+        def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Chest, ItemDrop.ItemData.ItemType.Legs, ItemDrop.ItemData.ItemType.Shoulder);
+        def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.ValuesPerRarity.Magic = new ValueDef(1, 2, 1);
         def.ValuesPerRarity.Rare = new ValueDef(1, 3, 1);
         def.ValuesPerRarity.Epic =  new ValueDef(1, 4, 1);
@@ -29,6 +27,7 @@ public static class AddArmor
         [HarmonyPriority(Priority.First)]
         private static void Postfix(ItemDrop.ItemData __instance, ref float __result)
         {
+            if (!DefinitionExtensions.IsEnabled("AddArmor")) return;
             if (__instance.GetMagicItem() is { } magicItem)
             {
                 MagicItemEffect? armor = magicItem.Effects.FirstOrDefault(x => x.EffectType == "AddArmor");

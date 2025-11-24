@@ -20,6 +20,8 @@ public static class PiercingShot
     {
         private static void Prefix(Projectile __instance)
         {
+            if (!DefinitionExtensions.IsEnabled("PiercingShot")) return;
+
             if (__instance.m_didBounce || __instance.m_owner is not Player player || !EpicLoot.HasActiveMagicEffectOnWeapon(player, __instance.m_weapon, "PiercingShot", out float _)) return;
             if (__instance.m_type is not (ProjectileType.Arrow or ProjectileType.Bolt)) return;
 

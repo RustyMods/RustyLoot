@@ -24,10 +24,15 @@ public static class ModifyAdrenaline
     {
         private static void Prefix(Player __instance, ref float v)
         {
+            if (!DefinitionExtensions.IsEnabled("ModifyAdrenaline")) return;
+            
+            if (v < 0) return;
+            
             if (__instance.HasActiveMagicEffect("ModifyAdrenaline", out float modifier))
             {
                 v *= 1 + modifier / 100;
             }
+            RustyLootPlugin.RustyLootLogger.LogWarning($"AddAdrenaline {v}");
         }
     }
 }

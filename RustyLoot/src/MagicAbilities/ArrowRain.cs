@@ -66,19 +66,19 @@ public partial class MagicAbilities
         helmet.Register();
     }
 
-    [HarmonyPatch(typeof(Projectile), nameof(Projectile.OnHit))]
-    private static class Projectile_OnHit_Patch
-    {
-        private static void Prefix(Projectile __instance)
-        {
-            if (__instance.m_owner is not Player player) return;
-            if (player != Player.m_localPlayer) return;
-            __instance.m_onHit += (collider, point, water) =>
-            {
-                OnHit?.Invoke(__instance, collider, point, water);
-            };
-        }
-    }
+    // [HarmonyPatch(typeof(Projectile), nameof(Projectile.OnHit))]
+    // private static class Projectile_OnHit_Patch
+    // {
+    //     private static void Prefix(Projectile __instance)
+    //     {
+    //         if (__instance.m_owner is not Player player) return;
+    //         if (player != Player.m_localPlayer) return;
+    //         __instance.m_onHit += (collider, point, water) =>
+    //         {
+    //             OnHit?.Invoke(__instance, collider, point, water);
+    //         };
+    //     }
+    // }
 
     public static event Action<Projectile, Collider?, Vector3, bool>? OnHit;
 

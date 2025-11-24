@@ -19,21 +19,26 @@ public static class ModifyTrinketDuration
         def.Serialize();
     }
 
-    [HarmonyPatch(typeof(Player), nameof(Player.AddAdrenaline))]
-    private static class Player_AddAdrenaline_Patch
+    [HarmonyPatch(typeof(StatusEffect), nameof(StatusEffect.Setup))]
+    private static class StatusEffect_Setup_Patch
     {
-        private static void Postfix(Player __instance)
+        private static void Postfix(StatusEffect __instance)
         {
-            if (__instance.HasActiveMagicEffect("ModifyTrinketDuration", out float modifier))
+            if (!DefinitionExtensions.IsEnabled("ModifyTrinketDuration")) return;
+
+            if (__instance.m_character is not Player player) return;
+            if (player.HasActiveMagicEffect("ModifyTrinketDuration", out float modifier))
             {
-                foreach (Player.StatusEffectLevel adrenalineEffect in __instance.m_adrenalineEffects)
+                if (player.m_trinketItem is { m_equipped: true } trinket)
                 {
-                    StatusEffect? effect = __instance.GetSEMan().GetStatusEffect(adrenalineEffect.m_se.NameHash());
-                    if (effect != null)
+                    if (trinket.m_shared.m_fullAdrenalineSE is { } adrenalineSE)
                     {
-                        var originalDuration = effect.m_ttl;
-                        effect.m_ttl *= 1 + modifier / 100;
-                        RustyLootPlugin.RustyLootLogger.LogWarning($"Modified trinket duration: {effect.name}, {originalDuration} seconds to {effect.m_ttl} seconds");
+                        if (__instance.NameHash() == adrenalineSE.NameHash())
+                        {
+                            float originalDuration = __instance.m_ttl;
+                            __instance.m_ttl *= 1 + modifier / 100;
+                            RustyLootPlugin.RustyLootLogger.LogWarning($"Modified trinket duration: {__instance.name}, {originalDuration} seconds to {__instance.m_ttl} seconds");
+                        }
                     }
                 }
             }

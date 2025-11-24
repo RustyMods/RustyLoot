@@ -20,6 +20,8 @@ public static class MistVision
     {
         private static void Postfix(Humanoid __instance, ItemDrop.ItemData item)
         {
+            if (!DefinitionExtensions.IsEnabled("RemoveMist")) return;
+
             if (__instance is not Player player || !ParticleMist.m_instance) return;
             ParticleMist.m_instance.enabled = !player.HasActiveMagicEffect("RemoveMist", out float _);
         }
@@ -30,6 +32,8 @@ public static class MistVision
     {
         private static void Postfix(Humanoid __instance, ItemDrop.ItemData item)
         {
+            if (!DefinitionExtensions.IsEnabled("RemoveMist")) return;
+
             if (__instance is not Player player || !ParticleMist.m_instance) return;
             ParticleMist.m_instance.enabled = !player.HasActiveMagicEffect("RemoveMist", out float _);
         }

@@ -40,6 +40,8 @@ public static class IronMaiden
     {
         private static void Postfix(Player __instance, HitData hit)
         {
+            if (!DefinitionExtensions.IsEnabled("IronMaiden")) return;
+
             if (__instance.HasActiveMagicEffect("IronMaiden", out float modifier))
             {
                 var totalDamage = hit.GetTotalDamage();
@@ -49,6 +51,7 @@ public static class IronMaiden
                 {
                     __instance.GetSEMan().AddStatusEffect("SE_IronMaiden".GetStableHashCode(), true, skillLevel: modifier);
                     __instance.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
+                    RustyLootPlugin.RustyLootLogger.LogWarning($"IronMaiden {modifier}");
                 }
             }
         }

@@ -26,6 +26,8 @@ public static class Lifebloom
     {
         private static void Postfix(Player __instance, HitData hit)
         {
+            if (!DefinitionExtensions.IsEnabled("Lifebloom")) return;
+
             if (__instance.HasActiveMagicEffect("Lifebloom", out float modifier))
             {
                 float totalDamage = hit.GetTotalDamage();
@@ -35,6 +37,7 @@ public static class Lifebloom
                 {
                     __instance.GetSEMan().AddStatusEffect("SE_Rejuvenate".GetStableHashCode(), true, 0, fifteen);
                     __instance.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
+                    RustyLootPlugin.RustyLootLogger.LogWarning($"Lifebloom {fifteen}");
                 }
             }
         }
