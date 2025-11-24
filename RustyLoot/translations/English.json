@@ -41,7 +41,16 @@
   "mod_epicloot_lifebloom": "Lifebloom +{0:0.#}%",
   "mod_epicloot_lifebloom_desc": "<color=yellow>X</color>% chance to heal 15% of incoming damage over 12 seconds",
   
-  
+  "mod_epicloot_wayfarer": "Wayfarer",
+  "mod_epicloot_wayfarer_desc": "Wayfarer [Activated]: Increases carry weight and removes movement speed penalties for 5min. Cooldown 10min",
+  "mod_epicloot_wayfarer_helm": "Wayfarer's Headdress",
+  "mod_epicloot_wayfarer_helm_desc": "The wayfarer lights the way for his fellow vikings",
+  "mod_epicloot_wayfarer_chest": "Wayfarer's Chestpiece",
+  "mod_epicloot_wayfarer_chest_desc": "The wayfarer is nimble and light on their toes",
+  "mod_epicloot_wayfarer_legs": "Wayfarer's Pantaloons",
+  "mod_epicloot_wayfarer_legs_desc": "The wayfarer explores everything and anything",
+  "mod_epicloot_wayfarer_cape": "Wayfarer's Cape",
+  "mod_epicloot_wayfarer_cape_desc": "The wayfarer knows of all breezes and gusts",
   
   
   "mod_epicloot_arrowrain": "Rain of Arrows",

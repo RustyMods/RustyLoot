@@ -8,6 +8,7 @@ using EpicLootAPI;
 using HarmonyLib;
 using JetBrains.Annotations;
 using LocalizationManager;
+using RustyLoot.Sets;
 using ServerSync;
 using UnityEngine;
 
@@ -59,6 +60,7 @@ public class RustyLootPlugin : BaseUnityPlugin
 
 
         SetupMagicEffects();
+        SetupSets();
         
         MagicAbilities.Setup();
         
@@ -66,6 +68,11 @@ public class RustyLootPlugin : BaseUnityPlugin
         _harmony.PatchAll(assembly);
         SetupWatcher();
         DefinitionExtensions.SetupMagicEffectWatcher();
+    }
+
+    public void SetupSets()
+    {
+        Wayfarer.Setup();
     }
 
     public void SetupMagicEffects()

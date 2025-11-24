@@ -20,16 +20,24 @@ public static class DefinitionExtensions
         NullValueHandling = NullValueHandling.Ignore,
         DefaultValueHandling = DefaultValueHandling.Ignore,
         Formatting = Formatting.Indented,
-        ContractResolver = new IgnoreEmptyValuesResolver()
+        ContractResolver = new IgnoreEmptyValuesResolver(),
+        Converters =
+        {
+            new Newtonsoft.Json.Converters.StringEnumConverter()
+        }
     };
-
     
     private static readonly JsonSerializerSettings deserializationSettings = new JsonSerializerSettings
     {
-        MissingMemberHandling = MissingMemberHandling.Ignore,    
-        NullValueHandling = NullValueHandling.Ignore,          
-        DefaultValueHandling = DefaultValueHandling.Populate
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        NullValueHandling = NullValueHandling.Ignore,
+        DefaultValueHandling = DefaultValueHandling.Populate,
+        Converters =
+        {
+            new Newtonsoft.Json.Converters.StringEnumConverter()
+        }
     };
+
 
     private const string folderName = "RustyLoot";
     private const string effectFolderName = "MagicEffects";
