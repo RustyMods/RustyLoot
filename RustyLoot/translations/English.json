@@ -1,0 +1,64 @@
+{
+  "mod_epicloot_piercingshot": "Piercing Shot",
+  "mod_epicloot_piercingshot_desc": "Arrows pierce through your foes",
+
+  "mod_epicloot_magicarrow": "Magic Arrow",
+  "mod_epicloot_magicarrow_desc": "Bow can form a magic arrow using eitr",
+
+  "mod_epicloot_magicbolt": "Magic Bolt",
+  "mod_epicloot_magicbolt_desc": "Crossbow can form a magic bolt using eitr",
+
+  "mod_epicloot_seasonality": "Seasonality +{0:0.#}%",
+  "mod_epicloot_seasonality_desc": "Summer never gets cold; spring increases harvest, chance to take effect <color=yellow>X</color>%; fall reduces fall damage by <color=yellow>X</color>%; winter never gets wet",
+
+  "mod_epicloot_removemist": "Mist Vision",
+  "mod_epicloot_removemist_desc": "Clears mistland's mist",
+
+  "mod_epicloot_modifyadrenaline": "Modify Adrenaline +{0:0.#}%",
+  "mod_epicloot_modifyadrenaline_desc": "Increase adrenaline gain +<color=yellow>X</color>%",
+
+  "mod_epicloot_modifyadrenalinecost": "Modify Adrenaline Required -{0:0.#}%",
+  "mod_epicloot_modifyadrenalinecost_desc": "Reduce required adrenaline needed to trigger by -<color=yellow>X</color>%",
+
+  "mod_epicloot_modifytrinketduration": "Modify Trinket Duration +{0:0.#}%",
+  "mod_epicloot_modifytrinketduration_desc": "Increase trinket duration by <color=yellow>X</color>%",
+
+  "mod_epicloot_seawolf": "Sea Wolf +{0:0.#}%",
+  "mod_epicloot_seawolf_desc": "Total damage increased by <color=yellow>X</color>% while it is raining",
+
+  "mod_epicloot_ironmaiden": "Iron Maiden +{0:0.#}",
+  "mod_epicloot_ironmaiden_desc": "If total incurred damage is over 25% of max health, gain <color=yellow>X</color> bonus armor",
+
+  "mod_epicloot_rejuvenate": "Rejuvenate +{0:0.#}%",
+  "mod_epicloot_rejuvenate_desc": "<color=yellow>X</color>% chance to heal 15% of total damage dealt over 12 seconds",
+
+  "mod_epicloot_honeybound": "Honeybound +{0:0.#}%",
+  "mod_epicloot_honeybound_desc": "Increase food duration by <color=yellow>X</color>%",
+  
+  "mod_epicloot_addarmor": "Add Armor +{0:0.#}",
+  "mod_epicloot_addarmor_desc": "Increase armor by <color=yellow>X</color>",
+
+  "mod_epicloot_lifebloom": "Lifebloom +{0:0.#}%",
+  "mod_epicloot_lifebloom_desc": "<color=yellow>X</color>% chance to heal 15% of incoming damage over 12 seconds",
+  
+  
+  
+  
+  "mod_epicloot_arrowrain": "Rain of Arrows",
+  "mod_epicloot_arrowrain_desc": "Showers nearby foes with poison arrows",
+
+  "mod_epicloot_hunterset": "Hunter",
+  "mod_epicloot_hunterset_desc": "Legendary hunter set",
+
+  "mod_epicloot_hunterchest": "Hunter Chestpiece",
+  "mod_epicloot_hunterchest_desc": "Grim and glory from range",
+
+  "mod_epicloot_hunterlegs": "Hunter Legs",
+  "mod_epicloot_hunterlegs_desc": "Grim and glory from range",
+
+  "mod_epicloot_huntercape": "Hunter Cloak",
+  "mod_epicloot_huntercape_desc": "Grim and glory from range",
+
+  "mod_epicloot_hunterhelmet": "Hunter Helm",
+  "mod_epicloot_hunterhelmet_desc": "Grim and glory from range"
+}
