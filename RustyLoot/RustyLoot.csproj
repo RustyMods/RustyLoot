@@ -138,6 +138,7 @@
         <Compile Include="src\MagicAbilities\ArrowRain.cs" />
         <Compile Include="src\MagicAbilities\Setup.cs" />
         <Compile Include="src\MagicEffects\AddArmor.cs" />
+        <Compile Include="src\MagicEffects\ForsakenBlow.cs" />
         <Compile Include="src\MagicEffects\Honeybound.cs" />
         <Compile Include="src\MagicEffects\IronMaiden.cs" />
         <Compile Include="src\MagicEffects\Lifebloom.cs" />

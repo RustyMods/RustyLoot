@@ -84,6 +84,7 @@ public class RustyLootPlugin : BaseUnityPlugin
         Honeybound.Setup();
         AddArmor.Setup();
         Lifebloom.Setup();
+        ForsakenBlow.Setup();
     }
 
     private void OnDestroy()
