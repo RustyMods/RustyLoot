@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace RustyLoot;
 
-public class SeaWolf
+public static class SeaWolf
 {
     public static void Setup()
     {
@@ -24,12 +24,19 @@ public class SeaWolf
         private static void Prefix(Character __instance, HitData hit)
         {
             if (!MagicEffect.IsEnabled("SeaWolf")) return;
-
-            if (hit.GetAttacker() is Player player && player.HasActiveMagicEffect("SeaWolf", out float modifier) && player.GetSEMan().HaveStatusEffect(SEMan.s_statusEffectWet))
+            if (!__instance.m_nview.IsOwner() || hit.GetAttacker() is not Player player) return;
+            if (player.HasActiveMagicEffect("SeaWolf", out float modifier, 0.01f) && player.GetSEMan().HaveStatusEffect(SEMan.s_statusEffectWet))
             {
-                var mod = 1 + modifier / 100;
+                float baseDamage = hit.GetTotalDamage();
+                float mod = 1 + modifier;
                 hit.ApplyModifier(mod);
-                if (RustyLootPlugin.ShowLogs) RustyLootPlugin.RustyLootLogger.LogWarning($"SeaWolf.RPC_Damage modifier: {mod}");
+
+                if (MagicEffect.ShowLogs("SeaWolf"))
+                {
+                    RustyLootPlugin.LogDebug(
+                        $"[SeaWolf] attacker:{player.GetPlayerName()} target:{__instance.m_name} base:{baseDamage:0.#} mod:{modifier:0.#}x => final:{hit.GetTotalDamage():0.#}"
+                    );
+                }
             }
         }
     }

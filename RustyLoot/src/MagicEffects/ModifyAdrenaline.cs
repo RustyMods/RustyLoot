@@ -27,10 +27,10 @@ public static class ModifyAdrenaline
             
             if (v < 0) return;
 
-            if (__instance.HasActiveMagicEffect("ModifyAdrenaline", out float modifier))
+            if (__instance.HasActiveMagicEffect("ModifyAdrenaline", out float modifier, 0.01f))
             {
                 float before = v;
-                v *= 1 + modifier / 100f;
+                v *= 1 + modifier;
                 float after = v;
 
                 if (MagicEffect.ShowLogs("ModifyAdrenaline"))

@@ -26,12 +26,12 @@ public static class ModifyTrinketDuration
             if (!MagicEffect.IsEnabled("ModifyTrinketDuration")) return;
 
             if (__instance.m_character is not Player player) return;
-            if (player.HasActiveMagicEffect("ModifyTrinketDuration", out float modifier))
+            if (player.HasActiveMagicEffect("ModifyTrinketDuration", out float modifier, 0.01f))
             {
                 if (player.m_trinketItem is { m_equipped: true } trinket && trinket.m_shared.m_fullAdrenalineSE is { } adrenalineSE && __instance.NameHash() == adrenalineSE.NameHash())
                 {
                     float before = __instance.m_ttl;
-                    __instance.m_ttl *= 1 + modifier / 100f;
+                    __instance.m_ttl *= 1 + modifier;
                     float after = __instance.m_ttl;
 
                     if (MagicEffect.ShowLogs("ModifyTrinketDuration"))

@@ -89,8 +89,8 @@ public static class Seasonality
             if (!MagicEffect.IsEnabled("Seasonality")) return;
 
             if (!isLoaded) return;
-            if (__instance is not Player player || !__instance.m_nview.IsValid() || hit.m_hitType is not HitData.HitType.Fall || !player.HasActiveMagicEffect("Seasonality", out float effectValue) || GetSeason() is not Season.Fall) return;
-            hit.ApplyModifier(Mathf.Clamp01(1f - effectValue / 100f)); 
+            if (__instance is not Player player || !__instance.m_nview.IsValid() || hit.m_hitType is not HitData.HitType.Fall || !player.HasActiveMagicEffect("Seasonality", out float effectValue, 0.01f) || GetSeason() is not Season.Fall) return;
+            hit.ApplyModifier(Mathf.Clamp01(1f - effectValue)); 
         }
     }
 

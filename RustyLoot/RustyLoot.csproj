@@ -157,6 +157,7 @@
         <Compile Include="src\Sets\Seidrweaver.cs" />
         <Compile Include="src\Sets\Ulfheonar.cs" />
         <Compile Include="src\Sets\Wayfarer.cs" />
+        <Compile Include="src\SyncFiles.cs" />
         <Compile Include="VersionHandshake.cs"/>
     </ItemGroup>
     <ItemGroup>
@@ -171,6 +172,7 @@
         <EmbeddedResource Include="icons\bow_wood1.png" />
         <EmbeddedResource Include="icons\bone_skull.png" />
         <EmbeddedResource Include="icons\rejuvenate.png" />
+        <EmbeddedResource Include="icons\mushroom_big_red.png" />
         <Content Include="ILRepack.targets"/>
         <Content Include="Libs\EpicLootAPI.dll" />
         <Content Include="Libs\ServerSync.dll">

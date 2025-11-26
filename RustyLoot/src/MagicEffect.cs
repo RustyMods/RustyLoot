@@ -4,6 +4,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using EpicLootAPI;
 using Newtonsoft.Json;
+using ServerSync;
 
 namespace RustyLoot;
 
@@ -21,7 +22,11 @@ public class MagicEffect
     private static readonly Dictionary<string, ConfigEntry<Toggle>> noRollConfigs = new();
     private static readonly Dictionary<string, ConfigEntry<Toggle>> showLogConfigs = new();
 
-    private readonly MagicItemEffectDefinition definition;
+    public static readonly List<MagicEffect> MagicEffects = new();
+
+    public static Dictionary<MagicItemEffectDefinition, CustomSyncedValue<string>> syncedEffects = new();
+
+    public readonly MagicItemEffectDefinition definition;
     public MagicItemEffectRequirements Requirements => definition.Requirements;
     public ValuesPerRarityDef ValuesPerRarity => definition.ValuesPerRarity;
     public string Ability 
@@ -38,6 +43,7 @@ public class MagicEffect
         string displayName = $"$mod_epicloot_{type}";
         string description = $"$mod_epicloot_{type}_desc";
         definition = new MagicItemEffectDefinition(effectType, displayName, description);
+        MagicEffects.Add(this);
     }
 
     public bool IsEnabled() => noRollConfig?.Value is Toggle.On;
@@ -61,6 +67,7 @@ public class MagicEffect
         noRollConfigs[definition.Type] = noRollConfig;
         
         showLogs = RustyLootPlugin.config("Logs", definition.Type, Toggle.Off, $"If on, {definition.Type} will display detailed logs");
+        showLogConfigs[definition.Type] = showLogs;
     }
 
 
@@ -73,7 +80,9 @@ public class MagicEffect
         string filePath = Path.Combine(effectFolderPath, fileName);
         
         effects[filePath] = definition;
-
+        CustomSyncedValue<string> syncedValue = new(RustyLootPlugin.ConfigSync, $"RustyLoot.SyncedFiles.MagicEffects.{definition.Type}", "");
+        syncedValue.ValueChanged += () => OnServerSyncFileChanged(definition);
+        syncedEffects[definition] = syncedValue;
         if (File.Exists(filePath))
         {
             DeserializeEffect(filePath);
@@ -85,6 +94,27 @@ public class MagicEffect
         }
     }
 
+    public static void SyncEffect(MagicItemEffectDefinition definition)
+    {
+        if (!ZNet.instance || !ZNet.instance.IsServer()) return;
+        if (!syncedEffects.TryGetValue(definition, out var sync)) return;
+        string json = JsonConvert.SerializeObject(definition, Extensions.serializationSettings);
+        sync.Value = json;
+    }
+
+    private static void OnServerSyncFileChanged(MagicItemEffectDefinition definition)
+    {
+        if (!ZNet.instance || ZNet.instance.IsServer()) return;
+        if (!syncedEffects.TryGetValue(definition, out var sync)) return;
+        if (string.IsNullOrEmpty(sync.Value)) return;
+            
+        var data = JsonConvert.DeserializeObject<MagicItemEffectDefinition>(sync.Value, deserializationSettings);
+        if (data == null) return;
+        definition.CopyFieldsFrom(data);
+        definition.Update();
+        RustyLootPlugin.LogDebug($"Updated {definition.Type}");
+    }
+
     private static void DeserializeEffect(string filePath)
     {
         if (!File.Exists(filePath)) return;
@@ -93,6 +123,7 @@ public class MagicEffect
         MagicItemEffectDefinition? definition = JsonConvert.DeserializeObject<MagicItemEffectDefinition>(json, deserializationSettings);
         sourceDef.CopyFieldsFrom(definition);
         sourceDef.Update();
+        SyncEffect(sourceDef);
         RustyLootPlugin.RustyLootLogger.LogDebug($"Found {Path.GetFileName(filePath)}, reading values");
     }
     

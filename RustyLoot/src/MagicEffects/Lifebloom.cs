@@ -27,12 +27,12 @@ public static class Lifebloom
         {
             if (!MagicEffect.IsEnabled("Lifebloom")) return;
 
-            if (__instance.HasActiveMagicEffect("Lifebloom", out float modifier))
+            if (__instance.HasActiveMagicEffect("Lifebloom", out float modifier, 0.01f))
             {
                 float dmg = hit.GetTotalDamage();
                 float heal = dmg * 0.15f;
 
-                float chance = Mathf.Clamp01(modifier / 100f);
+                float chance = Mathf.Clamp01(modifier);
                 float roll = UnityEngine.Random.value;
                 bool trig = chance > roll;
 

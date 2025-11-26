@@ -33,7 +33,7 @@ public class RustyLootPlugin : BaseUnityPlugin
     internal static string ConnectionError = "";
     private readonly Harmony _harmony = new(ModGUID);
     public static readonly ManualLogSource RustyLootLogger = BepInEx.Logging.Logger.CreateLogSource(ModName);
-    private static readonly ConfigSync ConfigSync = new(ModGUID) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
+    public static readonly ConfigSync ConfigSync = new(ModGUID) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
     
     private static ConfigEntry<Toggle> _serverConfigLocked = null!;
     private static ConfigEntry<Toggle> _addLogs = null!;
