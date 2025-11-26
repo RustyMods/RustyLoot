@@ -36,14 +36,32 @@ public class RustyLootPlugin : BaseUnityPlugin
     private static readonly ConfigSync ConfigSync = new(ModGUID) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
     
     private static ConfigEntry<Toggle> _serverConfigLocked = null!;
+    private static ConfigEntry<Toggle> _addLogs = null!;
+    public static bool ShowLogs => _addLogs.Value is Toggle.On;
     public static RustyLootPlugin instance = null!;
     public static GameObject root = null!;
+
+    public static void LogDebug(string message)
+    {
+        if (!ShowLogs) return;
+        RustyLootLogger.LogDebug(message);
+    }
+
+    public static void LogWarning(string message)
+    {
+        if (!ShowLogs) return;
+        RustyLootLogger.LogWarning(message);
+    }
+
+    public static void LogError(string message)
+    {
+        RustyLootLogger.LogError(message);
+    }
 
     public void Awake()
     {
         instance = this;
-        _serverConfigLocked = config("1 - General", "Lock Configuration", Toggle.On, "If on, the configuration is locked and can be changed by server admins only.");
-        _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
+        SetupConfigs();
 
         root = new GameObject("RustyLoot_Root");
         DontDestroyOnLoad(root);
@@ -51,28 +69,37 @@ public class RustyLootPlugin : BaseUnityPlugin
 
         Localizer.Load();
         
-        RustyLootLogger.LogWarning("BETA RustyLoot is loaded!");
-        RustyLootLogger.LogWarning("Enchanting items with RustyLoot effects, then removing mod, will result in empty enchantments");
+        LogWarning("BETA RustyLoot is loaded!");
+        LogWarning("Enchanting items with RustyLoot effects, then removing mod, will result in empty enchantments");
         
-        EpicLoot.logger.OnWarning += RustyLootLogger.LogWarning;
-        EpicLoot.logger.OnError += RustyLootLogger.LogError;
+        EpicLoot.logger.OnWarning += LogWarning;
+        EpicLoot.logger.OnError += LogError;
         // EpicLoot.logger.OnDebug += RustyLootLogger.LogDebug;
-
 
         SetupMagicEffects();
         SetupSets();
         
-        MagicAbilities.Setup();
-        
         Assembly assembly = Assembly.GetExecutingAssembly();
         _harmony.PatchAll(assembly);
+        
         SetupWatcher();
-        DefinitionExtensions.SetupMagicEffectWatcher();
+        MagicEffect.SetupWatcher();
+        MagicSet.SetupWatcher();
+    }
+
+    public void SetupConfigs()
+    {
+        _serverConfigLocked = config("1 - General", "Lock Configuration", Toggle.On, "If on, the configuration is locked and can be changed by server admins only.");
+        _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
+        _addLogs = config("1 - General", "Show logs", Toggle.On, "If on, will show logs to show details of effects");
     }
 
     public void SetupSets()
     {
         Wayfarer.Setup();
+        Hrafnstorm.Setup();
+        Ulfheonar.Setup();
+        Seidrweaver.Setup();
     }
 
     public void SetupMagicEffects()

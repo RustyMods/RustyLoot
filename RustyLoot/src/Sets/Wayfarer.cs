@@ -10,13 +10,30 @@ public static class Wayfarer
 {
     public static void Setup()
     {
-        LegendarySetInfo set = new LegendarySetInfo(LegendaryType.Mythic, "Wayfarer", "$mod_epicloot_wayfarer");
-        set.LegendaryIDs.Add("WayfarerHelmet", "WayfarerChest", "WayfarerLegs", "WayfarerCape");
+        var head = new LegendaryInfo(LegendaryType.Mythic, "WayfarerHelmet", "$mod_epicloot_wayfarer_helm", "$mod_epicloot_wayfarer_helm_desc");
+        head.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet);
+        head.GuaranteedEffectCount = 6;
+
+        var chest = new LegendaryInfo(LegendaryType.Mythic, "WayfarerChest", "$mod_epicloot_wayfarer_chest", "$mod_epicloot_wayfarer_chest_desc");
+        chest.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Chest);
+        chest.GuaranteedEffectCount = 6;
+
+        var legs = new LegendaryInfo(LegendaryType.Mythic, "WayfarerLegs", "$mod_epicloot_wayfarer_legs", "$mod_epicloot_wayfarer_legs_desc");
+        legs.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Legs);
+        legs.GuaranteedEffectCount = 6;
+        
+        var cape = new LegendaryInfo(LegendaryType.Mythic, "WayfarerCape", "$mod_epicloot_wayfarer_cape", "$mod_epicloot_wayfarer_cape_desc");
+        cape.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Shoulder);
+        cape.GuaranteedEffectCount = 6;
+        
+        var set = new MagicSet("Wayfarer", LegendaryType.Mythic);
+        set.AddItems(head, chest, legs, cape);
         set.SetBonuses.Add(2, EffectType.AddMovementSkills, 10, 20);
         set.SetBonuses.Add(2, EffectType.AddPhysicalResistancePercentage, 10, 20);
         set.SetBonuses.Add(3, EffectType.ModifyDiscoveryRadius, 10, 25);
         set.SetBonuses.Add(4, "Wayfarer");
         set.Register();
+        set.Serialize();
         
         Sprite capeHoodIcon = SpriteManager.RegisterSprite("cape_hood_darkyellow.png")!;
         EpicLoot.RegisterAsset("CapeHood", capeHoodIcon);
@@ -26,36 +43,12 @@ public static class Wayfarer
         proxy.Ability.IconAsset = "CapeHood";
         proxy.Register();
         
-        var effectDef = new MagicItemEffectDefinition("Wayfarer", "$mod_epicloot_wayfarer_desc", "$mod_epicloot_wayfarer_desc");
+        MagicItemEffectDefinition effectDef = new MagicItemEffectDefinition("Wayfarer", "$mod_epicloot_wayfarer_desc", "$mod_epicloot_wayfarer_desc");
         effectDef.Requirements.NoRoll = true;
         effectDef.Ability = "Wayfarer";
         effectDef.Register();
         
-        var head = new LegendaryInfo(LegendaryType.Mythic, "WayfarerHelmet", "$mod_epicloot_wayfarer_helm", "$mod_epicloot_wayfarer_helm_desc");
-        head.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet);
-        head.GuaranteedEffectCount = 6;
-        head.IsSetItem = true;
-        head.Register();
-
-        var chest = new LegendaryInfo(LegendaryType.Mythic, "WayfarerChest", "$mod_epicloot_wayfarer_chest", "$mod_epicloot_wayfarer_chest_desc");
-        chest.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Chest);
-        chest.GuaranteedEffectCount = 6;
-        chest.IsSetItem = true;
-        chest.Register();
-
-        var legs = new LegendaryInfo(LegendaryType.Mythic, "WayfarerLegs", "$mod_epicloot_wayfarer_legs", "$mod_epicloot_wayfarer_legs_desc");
-        legs.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Legs);
-        legs.GuaranteedEffectCount = 6;
-        legs.IsSetItem = true;
-        legs.Register();
-        
-        var cape = new LegendaryInfo(LegendaryType.Mythic, "WayfarerCape", "$mod_epicloot_wayfarer_cape", "$mod_epicloot_wayfarer_cape_desc");
-        cape.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Shoulder);
-        cape.GuaranteedEffectCount = 6;
-        cape.IsSetItem = true;
-        cape.Register();
-        
-        var se = ScriptableObject.CreateInstance<SE_Wayfarer>();
+        SE_Wayfarer? se = ScriptableObject.CreateInstance<SE_Wayfarer>();
         se.name = "SE_Wayfarer";
         se.m_ttl = 300f;
         se.m_name = "$mod_epicloot_wayfarer";
@@ -73,12 +66,11 @@ public static class Wayfarer
             SetCooldownEndTime(GetTime() + Cooldown);
             List<Player> list = new List<Player>();
             Player.GetPlayersInRange(Player.transform.position, 10f, list);
+            list.Add(Player);
             foreach (Player? player in list)
             {
                 player.GetSEMan().AddStatusEffect("SE_Wayfarer".GetStableHashCode(), true);
             }
-
-            Player.GetSEMan().AddStatusEffect("SE_Wayfarer".GetStableHashCode(), true);
         }
     }
 

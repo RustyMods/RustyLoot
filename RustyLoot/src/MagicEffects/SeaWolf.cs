@@ -7,7 +7,7 @@ public class SeaWolf
 {
     public static void Setup()
     {
-        var def = new MagicItemEffectDefinition("SeaWolf", "$mod_epicloot_seawolf", "$mod_epicloot_seawolf_desc");
+        var def = new MagicEffect("SeaWolf");
         def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Shoulder);
         def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.ValuesPerRarity.Magic = new ValueDef(1, 5, 1);
@@ -16,7 +16,6 @@ public class SeaWolf
         def.ValuesPerRarity.Legendary = new ValueDef(7, 12, 1);
         def.ValuesPerRarity.Mythic = new ValueDef(10, 15, 1);
         def.Register();
-        def.Serialize();
     }
 
     [HarmonyPatch(typeof(Character), nameof(Character.RPC_Damage))]
@@ -24,13 +23,13 @@ public class SeaWolf
     {
         private static void Prefix(Character __instance, HitData hit)
         {
-            if (!DefinitionExtensions.IsEnabled("SeaWolf")) return;
+            if (!MagicEffect.IsEnabled("SeaWolf")) return;
 
             if (hit.GetAttacker() is Player player && player.HasActiveMagicEffect("SeaWolf", out float modifier) && player.GetSEMan().HaveStatusEffect(SEMan.s_statusEffectWet))
             {
                 var mod = 1 + modifier / 100;
                 hit.ApplyModifier(mod);
-                RustyLootPlugin.RustyLootLogger.LogWarning($"SeaWolf.RPC_Damage modifier: {mod}");
+                if (RustyLootPlugin.ShowLogs) RustyLootPlugin.RustyLootLogger.LogWarning($"SeaWolf.RPC_Damage modifier: {mod}");
             }
         }
     }

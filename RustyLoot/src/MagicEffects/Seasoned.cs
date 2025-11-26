@@ -12,7 +12,7 @@ public static class Seasonality
     {
         isLoaded = Chainloader.PluginInfos.ContainsKey("RustyMods.Seasonality");
         if (!isLoaded) return;
-        var def = new MagicItemEffectDefinition("Seasonality", "$mod_epicloot_seasonality", "$mod_epicloot_seasonality_desc");
+        var def = new MagicEffect("Seasonality");
         def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Chest, ItemDrop.ItemData.ItemType.Legs, ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Shoulder);
         def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.ValuesPerRarity.Magic = new ValueDef(1, 5, 1);
@@ -21,7 +21,6 @@ public static class Seasonality
         def.ValuesPerRarity.Legendary = new ValueDef(15, 20, 1);
         def.ValuesPerRarity.Mythic = new ValueDef(20, 25, 1);
         def.Register();
-        def.Serialize();
     }
 
     private enum Season
@@ -54,7 +53,7 @@ public static class Seasonality
     {
         private static void Postfix(ref bool __result)
         {
-            if (!DefinitionExtensions.IsEnabled("Seasonality")) return;
+            if (!MagicEffect.IsEnabled("Seasonality")) return;
 
             if (!isLoaded) return;
             if (!Player.m_localPlayer || GetSeason() is not Season.Summer || !Player.m_localPlayer.HasActiveMagicEffect("Seasonality", out float _)) return;
@@ -69,7 +68,7 @@ public static class Seasonality
     {
         private static void Prefix(long sender, ref int bonus)
         {
-            if (!DefinitionExtensions.IsEnabled("Seasonality")) return;
+            if (!MagicEffect.IsEnabled("Seasonality")) return;
 
             if (!isLoaded) return;
             if (!Player.m_localPlayer || Player.m_localPlayer.GetZDOID().UserID != sender) return;
@@ -87,7 +86,7 @@ public static class Seasonality
     {
         private static void Prefix(Character __instance, HitData hit)
         {
-            if (!DefinitionExtensions.IsEnabled("Seasonality")) return;
+            if (!MagicEffect.IsEnabled("Seasonality")) return;
 
             if (!isLoaded) return;
             if (__instance is not Player player || !__instance.m_nview.IsValid() || hit.m_hitType is not HitData.HitType.Fall || !player.HasActiveMagicEffect("Seasonality", out float effectValue) || GetSeason() is not Season.Fall) return;
@@ -100,7 +99,7 @@ public static class Seasonality
     {
         private static bool Prefix(SEMan __instance, int nameHash)
         {
-            if (!DefinitionExtensions.IsEnabled("Seasonality")) return true;
+            if (!MagicEffect.IsEnabled("Seasonality")) return true;
 
             if (!isLoaded) return true;
             if (nameHash != SEMan.s_statusEffectWet || __instance.m_character is not Player player) return true;

@@ -41,6 +41,9 @@
   "mod_epicloot_lifebloom": "Lifebloom +{0:0.#}%",
   "mod_epicloot_lifebloom_desc": "<color=yellow>X</color>% chance to heal 15% of incoming damage over 12 seconds",
   
+  "mod_epicloot_forsakenblow": "Forsaken Blow",
+  "mod_epicloot_forsakenblow_desc": "Reduce guardian power cooldown by <color=yellow>X</color> seconds per attack blocked",
+  
   "mod_epicloot_wayfarer": "Wayfarer",
   "mod_epicloot_wayfarer_desc": "Wayfarer [Activated]: Increases carry weight and removes movement speed penalties for 5min. Cooldown 10min",
   "mod_epicloot_wayfarer_helm": "Wayfarer's Headdress",
@@ -52,22 +55,38 @@
   "mod_epicloot_wayfarer_cape": "Wayfarer's Cape",
   "mod_epicloot_wayfarer_cape_desc": "The wayfarer knows of all breezes and gusts",
   
-  
-  "mod_epicloot_arrowrain": "Rain of Arrows",
-  "mod_epicloot_arrowrain_desc": "Showers nearby foes with poison arrows",
+  "mod_epicloot_arrowrain": "Hrafnstorm [Triggered]: Your arrow tears the sky, calling down a volley of spectral arrows.",
+  "mod_epicloot_arrowrain_desc": "On impact, your shot summons a brief storm—raining poisoned arrows upon nearby foes.",
+  "mod_epicloot_hunterset": "Hrafnstorm Set",
+  "mod_epicloot_hunterset_desc": "A legendary hunter’s garb said to carry the blessing of Odin’s ravens, calling storms with every strike.",
+  "mod_epicloot_hunterchest": "Hrafnstorm Chestguard",
+  "mod_epicloot_hunterchest_desc": "Woven with raven-feather runes, it steadies the arm and sharpens the hunt.",
+  "mod_epicloot_hunterlegs": "Hrafnstorm Leggings",
+  "mod_epicloot_hunterlegs_desc": "Light as a raven’s glide, crafted for swift steps and deadlier aim.",
+  "mod_epicloot_huntercape": "Hrafnstorm Cloak",
+  "mod_epicloot_huntercape_desc": "A cloak of dark plumage—rumored to shift with the wind and hide its wearer from sight.",
+  "mod_epicloot_hunterhelmet": "Hrafnstorm Helm",
+  "mod_epicloot_hunterhelmet_desc": "A helm adorned with storm-black feathers, granting the focus of a hunting raven.",
 
-  "mod_epicloot_hunterset": "Hunter",
-  "mod_epicloot_hunterset_desc": "Legendary hunter set",
+  "mod_epicloot_ulfheonar": "Ulfhéðnar",
+  "mod_epicloot_ulfheonar_desc": "Ulfhéðnar [Activated]: Unleash a wolf-spirit roar. Allies and self enter a Frenzy state, greatly increasing movement speed and damage, but lowering resistances for 5 minutes. Cooldown: 10 minutes.",
+  "mod_epicloot_ulfheonar_helm": "Ulfhéðnar Howl",
+  "mod_epicloot_ulfheonar_helm_desc": "A helm fashioned from the skull of a primordial direwolf. Its empty eyes still remember the hunt. Increases critical strike chance and grants bonus damage when wounded.",
+  "mod_epicloot_ulfheonar_cape": "Ulfhéðnar Mantle",
+  "mod_epicloot_ulfheonar_cape_desc": "A mantle draped in heavy wolf fur and etched bone runes. The air bends around it with a faint growl. Improves stealth and slightly slows enemies that draw near.",
+  "mod_epicloot_ulfheonar_legs": "Ulfhéðnar Greaves",
+  "mod_epicloot_ulfheonar_legs_desc": "Greaves wrapped in ancient pelts, reinforced with iron and bone. The wearer’s stride becomes swift and relentless. Increases movement speed and dodge distance.",
+  "mod_epicloot_ulfheonar_claws": "Ulfhéðnar Gauntlets",
+  "mod_epicloot_ulfheonar_claws_desc": "Gauntlets lined with iron claws and bound with wolf hide. Each strike tears deeper than the last. Boosts attack speed and unarmed damage; first hit applies a brief bleed.",
 
-  "mod_epicloot_hunterchest": "Hunter Chestpiece",
-  "mod_epicloot_hunterchest_desc": "Grim and glory from range",
-
-  "mod_epicloot_hunterlegs": "Hunter Legs",
-  "mod_epicloot_hunterlegs_desc": "Grim and glory from range",
-
-  "mod_epicloot_huntercape": "Hunter Cloak",
-  "mod_epicloot_huntercape_desc": "Grim and glory from range",
-
-  "mod_epicloot_hunterhelmet": "Hunter Helm",
-  "mod_epicloot_hunterhelmet_desc": "Grim and glory from range"
+  "mod_epicloot_siedrweaver": "Siedrweaver",
+  "mod_epicloot_siedrweaver_desc": "Siedrweaver [Activated]: Channel ancient siedr to release a wave of restorative magic. Consumes Eitr to heal yourself and nearby allies",
+  "mod_epicloot_siedrweaver_helm": "Siedrweaver Hood",
+  "mod_epicloot_siedrweaver_helm_desc": "A hood traced with quiet runes. It sharpens focus and steadies the flow of siedr.",
+  "mod_epicloot_siedrweaver_chest": "Siedrweaver Robe",
+  "mod_epicloot_siedrweaver_chest_desc": "Robes embroidered with the threads of fate. They warm the spirit and bolster restorative magic.",
+  "mod_epicloot_siedrweaver_legs": "Siedrweaver Legwraps",
+  "mod_epicloot_siedrweaver_legs_desc": "Woven legwraps blessed by spiritcallers, allowing the caster to move gracefully between worlds.",
+  "mod_epicloot_siedrweaver_cape": "Siedrweaver Mantle",
+  "mod_epicloot_siedrweaver_cape_desc": "A mantle shimmering with spirit-mist. The air around it feels lighter, as if touched by hidden hands.",
 }

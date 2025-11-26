@@ -8,7 +8,7 @@ public static class Lifebloom
 {
     public static void Setup()
     {
-        var def = new MagicItemEffectDefinition("Lifebloom", "$mod_epicloot_lifebloom", "$mod_epicloot_lifeboom_desc");
+        var def = new MagicEffect("Lifebloom");
         def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Shield);
         def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary,
             ItemRarity.Mythic);
@@ -18,7 +18,6 @@ public static class Lifebloom
         def.ValuesPerRarity.Legendary = new ValueDef(20, 25, 1);
         def.ValuesPerRarity.Mythic = new ValueDef(25, 30, 1);
         def.Register();
-        def.Serialize();
     }
 
     [HarmonyPatch(typeof(Player), nameof(Player.OnDamaged))]
@@ -26,18 +25,28 @@ public static class Lifebloom
     {
         private static void Postfix(Player __instance, HitData hit)
         {
-            if (!DefinitionExtensions.IsEnabled("Lifebloom")) return;
+            if (!MagicEffect.IsEnabled("Lifebloom")) return;
 
             if (__instance.HasActiveMagicEffect("Lifebloom", out float modifier))
             {
-                float totalDamage = hit.GetTotalDamage();
-                float fifteen = totalDamage * 0.15f;
-                float random = UnityEngine.Random.value;
-                if (Mathf.Clamp01(modifier / 100) > random)
+                float dmg = hit.GetTotalDamage();
+                float heal = dmg * 0.15f;
+
+                float chance = Mathf.Clamp01(modifier / 100f);
+                float roll = UnityEngine.Random.value;
+                bool trig = chance > roll;
+
+                if (trig)
                 {
-                    __instance.GetSEMan().AddStatusEffect("SE_Rejuvenate".GetStableHashCode(), true, 0, fifteen);
+                    __instance.GetSEMan().AddStatusEffect("SE_Rejuvenate".GetStableHashCode(), true, 0, heal);
                     __instance.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
-                    RustyLootPlugin.RustyLootLogger.LogWarning($"Lifebloom {fifteen}");
+                }
+
+                if (MagicEffect.ShowLogs("Lifebloom"))
+                {
+                    RustyLootPlugin.LogDebug(
+                        $"[Lifebloom] dmg:{dmg:0.#} heal:{heal:0.#} chance:{chance:0.###} roll:{roll:0.###} trig:{trig}"
+                    );
                 }
             }
         }

@@ -68,11 +68,10 @@ public static class MagicProjectiles
             arrow = component;
         };
         
-        var def = new MagicItemEffectDefinition("MagicArrow", "$mod_epicloot_magicarrow", "$mod_epicloot_magicarrow_desc");
+        var def = new MagicEffect("MagicArrow");
         def.Requirements.AllowedSkillTypes.Add(Skills.SkillType.Bows);
         def.Requirements.AllowedRarities.Add(ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.Register();
-        def.Serialize();
 
         var pierceDmg = RustyLootPlugin.config("Magic Arrow", "Pierce Damage", 26f, "Set magic arrow pierce damage");
         var frostDmg = RustyLootPlugin.config("Magic Arrow", "Frost Damage", 52f, "Set magic arrow frost damage");
@@ -135,11 +134,10 @@ public static class MagicProjectiles
             bolt = component;
         };
         
-        var def = new MagicItemEffectDefinition("MagicBolt", "$mod_epicloot_magicbolt", "$mod_epicloot_magicbolt_desc");
+        var def = new MagicEffect("MagicBolt");
         def.Requirements.AllowedSkillTypes.Add(Skills.SkillType.Crossbows);
         def.Requirements.AllowedRarities.Add(ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.Register();
-        def.Serialize();
         
         var pierceDmg = RustyLootPlugin.config("Magic Bolt", "Pierce Damage", 26f, "Set magic arrow pierce damage");
         var frostDmg = RustyLootPlugin.config("Magic Bolt", "Frost Damage", 52f, "Set magic arrow frost damage");
@@ -168,6 +166,8 @@ public static class MagicProjectiles
     {
         private static bool Prefix(Humanoid character, ItemDrop.ItemData weapon, ref bool __result)
         {
+            if (!MagicEffect.IsEnabled("MagicArrow") && !MagicEffect.IsEnabled("MagicBolt")) return true;
+
             if (character is not Player player) return true;
             if (weapon.m_shared.m_skillType is not (Skills.SkillType.Bows or Skills.SkillType.Crossbows)) return true;
             if (string.IsNullOrEmpty(weapon.m_shared.m_ammoType)) return true;
@@ -196,7 +196,7 @@ public static class MagicProjectiles
     {
         private static void Postfix(Humanoid character, ItemDrop.ItemData weapon, ref ItemDrop.ItemData? __result)
         {
-            if (!DefinitionExtensions.IsEnabled("MagicArrow") && !DefinitionExtensions.IsEnabled("MagicBolt")) return;
+            if (!MagicEffect.IsEnabled("MagicArrow") && !MagicEffect.IsEnabled("MagicBolt")) return;
 
             if (__result != null || character is not Player player) return;
             if (weapon.m_shared.m_skillType is not (Skills.SkillType.Bows or Skills.SkillType.Crossbows)) return;
@@ -219,7 +219,7 @@ public static class MagicProjectiles
     {
         private static bool Prefix(Attack __instance, ref bool __result)
         {
-            if (!DefinitionExtensions.IsEnabled("MagicArrow") && !DefinitionExtensions.IsEnabled("MagicBolt")) return true;
+            if (!MagicEffect.IsEnabled("MagicArrow") && !MagicEffect.IsEnabled("MagicBolt")) return true;
 
             if (__instance.m_character is not Player player) return true;
             if (player.GetAmmoItem() is {} ammo && ammo.m_shared.m_ammoType == __instance.m_weapon.m_shared.m_ammoType) return true;
@@ -252,7 +252,7 @@ public static class MagicProjectiles
     {
         private static bool Prefix(Humanoid character, ItemDrop.ItemData weapon, ref bool __result)
         {
-            if (!DefinitionExtensions.IsEnabled("MagicArrow") && !DefinitionExtensions.IsEnabled("MagicBolt")) return true;
+            if (!MagicEffect.IsEnabled("MagicArrow") && !MagicEffect.IsEnabled("MagicBolt")) return true;
 
             if (character is not Player player) return true;
 

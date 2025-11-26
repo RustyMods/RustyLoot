@@ -6,18 +6,18 @@ namespace RustyLoot;
 
 public static class AddArmor
 {
+    public static MagicEffect effect = null!;
     public static void Setup()
     {
-        var def = new MagicItemEffectDefinition("AddArmor", "$mod_epicloot_addarmor", "$mod_epicloot_addarmor_desc");
-        def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Chest, ItemDrop.ItemData.ItemType.Legs, ItemDrop.ItemData.ItemType.Shoulder);
-        def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
-        def.ValuesPerRarity.Magic = new ValueDef(1, 2, 1);
-        def.ValuesPerRarity.Rare = new ValueDef(1, 3, 1);
-        def.ValuesPerRarity.Epic =  new ValueDef(1, 4, 1);
-        def.ValuesPerRarity.Legendary = new ValueDef(1, 5, 1);
-        def.ValuesPerRarity.Mythic = new ValueDef(1, 6, 1);
-        def.Register();
-        def.Serialize();
+        effect = new MagicEffect("AddArmor");
+        effect.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Chest, ItemDrop.ItemData.ItemType.Legs, ItemDrop.ItemData.ItemType.Shoulder);
+        effect.Requirements.AllowedRarities.All();
+        effect.ValuesPerRarity.Magic = new ValueDef(1, 2, 1);
+        effect.ValuesPerRarity.Rare = new ValueDef(1, 3, 1);
+        effect.ValuesPerRarity.Epic =  new ValueDef(1, 4, 1);
+        effect.ValuesPerRarity.Legendary = new ValueDef(1, 5, 1);
+        effect.ValuesPerRarity.Mythic = new ValueDef(1, 6, 1);
+        effect.Register();
     }
 
 
@@ -27,12 +27,21 @@ public static class AddArmor
         [HarmonyPriority(Priority.First)]
         private static void Postfix(ItemDrop.ItemData __instance, ref float __result)
         {
-            if (!DefinitionExtensions.IsEnabled("AddArmor")) return;
+            if (!effect.IsEnabled()) return;
             if (__instance.GetMagicItem() is { } magicItem)
             {
                 MagicItemEffect? armor = magicItem.Effects.FirstOrDefault(x => x.EffectType == "AddArmor");
                 if (armor == null) return;
-                __result += armor.EffectValue;
+                
+                float add = armor.EffectValue;
+                float before = __result;
+
+                __result += add;
+
+                if (effect.ShowLogs())
+                {
+                    RustyLootPlugin.LogDebug($"[AddArmor] item:{__instance.m_shared.m_name} base:{before:0.#} +{add:0.#} => {__result:0.#}");
+                }
             }
         }
     }

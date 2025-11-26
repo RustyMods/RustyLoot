@@ -26,6 +26,7 @@ public class Clone
     {
         Source = source;
         NewName = newName;
+        PrefabName = source.name;
     }
 
     internal void Create()

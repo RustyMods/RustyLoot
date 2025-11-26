@@ -1,0 +1,49 @@
+ManifestFileVersion: 0
+CRC: 961929891
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9e2e4eec6479c5d396f2bac1fc21b167
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d6e5d0bb4e01cba12a1340caeeb3859d
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 9e2e4eec6479c5d396f2bac1fc21b167
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1521249158, guid: c1b78fa918b030faf1c1f6f6164daeb2, type: 3}
+- Class: 114
+  Script: {fileID: 469224316, guid: c1b78fa918b030faf1c1f6f6164daeb2, type: 3}
+- Class: 114
+  Script: {fileID: 2140874873, guid: c1b78fa918b030faf1c1f6f6164daeb2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: assembly_valheim
+  ClassName: EffectList
+- AssemblyName: assembly_valheim
+  ClassName: HitData/DamageTypes
+Assets:
+- Assets/_CUSTOM/VarietyFX/Prefabs/Ground/Fire/Flamethrower/vfx_flamethrower_purple.prefab
+- Assets/_CUSTOM/VarietyFX/Prefabs/Ground/Fire/Field/vfx_fire_field_blue.prefab
+- Assets/_CUSTOM/VarietyFX/Prefabs/Artificial/Magic/vfx_magic_circle.prefab
+- Assets/_CUSTOM/VarietyFX/Prefabs/Ground/Liquids/Blood/Loop/vfx_blood_dripping.prefab
+Dependencies: []

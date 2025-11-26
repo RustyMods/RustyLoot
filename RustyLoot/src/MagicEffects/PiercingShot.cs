@@ -8,11 +8,10 @@ public static class PiercingShot
 {
     public static void Setup()
     {
-        MagicItemEffectDefinition def = new MagicItemEffectDefinition("PiercingShot", "$mod_epicloot_piercingshot", "$mod_epicloot_piercingshot_desc");
+        MagicEffect def = new MagicEffect("PiercingShot");
         def.Requirements.AllowedSkillTypes.Add(Skills.SkillType.Bows, Skills.SkillType.Crossbows);
         def.Requirements.AllowedRarities.Add(ItemRarity.Magic, ItemRarity.Rare, ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.Register();
-        def.Serialize();
     }
     
     [HarmonyPatch(typeof(Projectile), nameof(Projectile.OnHit))]
@@ -20,7 +19,7 @@ public static class PiercingShot
     {
         private static void Prefix(Projectile __instance)
         {
-            if (!DefinitionExtensions.IsEnabled("PiercingShot")) return;
+            if (!MagicEffect.IsEnabled("PiercingShot")) return;
 
             if (__instance.m_didBounce || __instance.m_owner is not Player player || !EpicLoot.HasActiveMagicEffectOnWeapon(player, __instance.m_weapon, "PiercingShot", out float _)) return;
             if (__instance.m_type is not (ProjectileType.Arrow or ProjectileType.Bolt)) return;
@@ -33,7 +32,7 @@ public static class PiercingShot
                 GameObject? prefab = ZNetScene.instance.GetPrefab(normalizedName);
                 if (prefab == null)
                 {
-                    RustyLootPlugin.RustyLootLogger.LogWarning($"PiercingShot Failed to find projectile: {normalizedName}");
+                    RustyLootPlugin.LogWarning($"PiercingShot Failed to find projectile: {normalizedName}");
                     return;
                 }
                 

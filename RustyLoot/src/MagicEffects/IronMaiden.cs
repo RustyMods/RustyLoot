@@ -9,14 +9,13 @@ public static class IronMaiden
 {
     public static void Setup()
     {
-        var def = new MagicItemEffectDefinition("IronMaiden", "$mod_epicloot_ironmaiden", "$mod_epicloot_ironmaiden_desc");
+        var def = new MagicEffect("IronMaiden");
         def.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Chest, ItemDrop.ItemData.ItemType.Legs);
         def.Requirements.AllowedRarities.Add(ItemRarity.Epic, ItemRarity.Legendary, ItemRarity.Mythic);
         def.ValuesPerRarity.Epic = new ValueDef(5, 10, 1);
         def.ValuesPerRarity.Legendary = new ValueDef(8, 12, 1);
         def.ValuesPerRarity.Mythic = new ValueDef(10, 15, 1);
         def.Register();
-        def.Serialize();
         
         SE_IronMaiden? status = ScriptableObject.CreateInstance<SE_IronMaiden>();
         status.name = "SE_IronMaiden";
@@ -40,18 +39,26 @@ public static class IronMaiden
     {
         private static void Postfix(Player __instance, HitData hit)
         {
-            if (!DefinitionExtensions.IsEnabled("IronMaiden")) return;
+            if (!MagicEffect.IsEnabled("IronMaiden")) return;
 
             if (__instance.HasActiveMagicEffect("IronMaiden", out float modifier))
             {
-                var totalDamage = hit.GetTotalDamage();
-                var totalHealth = __instance.GetMaxHealth();
-                var quarter = totalHealth * 0.25f;
-                if (totalDamage > quarter)
+                float dmg = hit.GetTotalDamage();
+                float maxHp = __instance.GetMaxHealth();
+                float threshold = maxHp * 0.25f;
+                bool trigger = dmg > threshold;
+
+                if (trigger)
                 {
                     __instance.GetSEMan().AddStatusEffect("SE_IronMaiden".GetStableHashCode(), true, skillLevel: modifier);
                     __instance.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
-                    RustyLootPlugin.RustyLootLogger.LogWarning($"IronMaiden {modifier}");
+                }
+
+                if (MagicEffect.ShowLogs("IronMaiden"))
+                {
+                    RustyLootPlugin.LogDebug(
+                        $"[IronMaiden] dmg:{dmg:0.#} thresh:{threshold:0.#} trig:{trigger} mod:{modifier:0.#}"
+                    );
                 }
             }
         }

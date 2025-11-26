@@ -7,11 +7,10 @@ public static class MistVision
 {
     public static void Setup()
     {
-        var def = new MagicItemEffectDefinition("RemoveMist", "$mod_epicloot_removemist", "$mod_epicloot_removemist_desc");
+        var def = new MagicEffect("RemoveMist");
         def.Requirements.AllowedItemNames.Add("$item_demister");
         def.Requirements.AllowedRarities.Add(ItemRarity.Legendary, ItemRarity.Mythic);
         def.Register();
-        def.Serialize();
     }
     
     
@@ -20,7 +19,7 @@ public static class MistVision
     {
         private static void Postfix(Humanoid __instance, ItemDrop.ItemData item)
         {
-            if (!DefinitionExtensions.IsEnabled("RemoveMist")) return;
+            if (!MagicEffect.IsEnabled("RemoveMist")) return;
 
             if (__instance is not Player player || !ParticleMist.m_instance) return;
             ParticleMist.m_instance.enabled = !player.HasActiveMagicEffect("RemoveMist", out float _);
@@ -32,7 +31,7 @@ public static class MistVision
     {
         private static void Postfix(Humanoid __instance, ItemDrop.ItemData item)
         {
-            if (!DefinitionExtensions.IsEnabled("RemoveMist")) return;
+            if (!MagicEffect.IsEnabled("RemoveMist")) return;
 
             if (__instance is not Player player || !ParticleMist.m_instance) return;
             ParticleMist.m_instance.enabled = !player.HasActiveMagicEffect("RemoveMist", out float _);
