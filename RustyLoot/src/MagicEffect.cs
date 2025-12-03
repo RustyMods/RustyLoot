@@ -124,7 +124,6 @@ public class MagicEffect
         sourceDef.CopyFieldsFrom(definition);
         sourceDef.Update();
         SyncEffect(sourceDef);
-        RustyLootPlugin.RustyLootLogger.LogDebug($"Found {Path.GetFileName(filePath)}, reading values");
     }
     
     public static void SetupWatcher()

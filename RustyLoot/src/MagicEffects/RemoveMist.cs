@@ -17,7 +17,7 @@ public static class MistVision
     [HarmonyPatch(typeof(Humanoid), nameof(Humanoid.EquipItem))]
     private static class Humanoid_EquipItem_Patch
     {
-        private static void Postfix(Humanoid __instance, ItemDrop.ItemData item)
+        private static void Postfix(Humanoid __instance)
         {
             if (!MagicEffect.IsEnabled("RemoveMist")) return;
 
@@ -29,7 +29,7 @@ public static class MistVision
     [HarmonyPatch(typeof(Humanoid), nameof(Humanoid.UnequipItem))]
     private static class Humanoid_UnequipItem_Patch
     {
-        private static void Postfix(Humanoid __instance, ItemDrop.ItemData item)
+        private static void Postfix(Humanoid __instance)
         {
             if (!MagicEffect.IsEnabled("RemoveMist")) return;
 

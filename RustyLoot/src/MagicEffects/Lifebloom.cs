@@ -1,5 +1,6 @@
 ﻿using EpicLootAPI;
 using HarmonyLib;
+using RustyLoot.Managers;
 using UnityEngine;
 
 namespace RustyLoot;
@@ -18,6 +19,34 @@ public static class Lifebloom
         def.ValuesPerRarity.Legendary = new ValueDef(20, 25, 1);
         def.ValuesPerRarity.Mythic = new ValueDef(25, 30, 1);
         def.Register();
+        
+        SE_Lifebloom? se = ScriptableObject.CreateInstance<SE_Lifebloom>();
+        se.name = "SE_Lifebloom";
+        se.m_name = "$mod_epicloot_lifebloom";
+        se.m_tooltip = "$mod_epicloot_lifebloom_desc";
+        se.m_ttl = 12f;
+        se.m_healthOverTime = 5;
+        se.m_healthOverTimeInterval = 1f;
+        se.m_icon = Rejuvenate.icon;
+        se.Register();
+    }
+    
+    public class SE_Lifebloom : SE_Stats
+    {
+        public override void SetLevel(int itemLevel, float skillLevel)
+        {
+            m_healthOverTime = skillLevel;
+            m_healthOverTimeDuration = 12f;
+            m_healthOverTimeTicks = m_healthOverTimeDuration / m_healthOverTimeInterval;
+            m_healthOverTimeTickHP = m_healthOverTime / m_healthOverTimeTicks;
+            
+            m_name = string.Format(Localization.instance.Localize(m_name), skillLevel).Replace("%", string.Empty);
+
+            if (MagicEffect.ShowLogs("Lifebloom"))
+            {
+                RustyLootPlugin.LogDebug($"[SE_Lifebloom]: item lvl: {itemLevel}, heal amount: {skillLevel}, duration: {m_healthOverTimeDuration}, hp/tick: {m_healthOverTimeTickHP}");
+            }
+        }
     }
 
     [HarmonyPatch(typeof(Player), nameof(Player.OnDamaged))]
@@ -38,7 +67,7 @@ public static class Lifebloom
 
                 if (trig)
                 {
-                    __instance.GetSEMan().AddStatusEffect("SE_Rejuvenate".GetStableHashCode(), true, 0, heal);
+                    __instance.GetSEMan().AddStatusEffect("SE_Lifebloom".GetStableHashCode(), true, 0, heal);
                     __instance.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
                 }
 

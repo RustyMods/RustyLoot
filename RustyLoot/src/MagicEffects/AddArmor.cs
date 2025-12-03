@@ -6,13 +6,13 @@ namespace RustyLoot;
 
 public static class AddArmor
 {
-    public static MagicEffect effect = null!;
+    private static MagicEffect effect = null!;
     public static void Setup()
     {
         effect = new MagicEffect("AddArmor");
         effect.Requirements.AddAllowedItemTypes(ItemDrop.ItemData.ItemType.Helmet, ItemDrop.ItemData.ItemType.Chest, ItemDrop.ItemData.ItemType.Legs, ItemDrop.ItemData.ItemType.Shoulder);
         effect.Requirements.AllowedRarities.All();
-        effect.ValuesPerRarity.Magic = new ValueDef(1, 2, 1);
+        effect.ValuesPerRarity.Magic.Set(1, 2, 1);
         effect.ValuesPerRarity.Rare = new ValueDef(1, 3, 1);
         effect.ValuesPerRarity.Epic =  new ValueDef(1, 4, 1);
         effect.ValuesPerRarity.Legendary = new ValueDef(1, 5, 1);

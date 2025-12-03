@@ -28,6 +28,7 @@ public static class Extensions
     {
         MissingMemberHandling = MissingMemberHandling.Ignore,
         NullValueHandling = NullValueHandling.Ignore,
+        ObjectCreationHandling = ObjectCreationHandling.Replace,
         DefaultValueHandling = DefaultValueHandling.Populate,
         Converters =
         {
@@ -40,6 +41,7 @@ public static class Extensions
         foreach (FieldInfo field in typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
         {
             object? value = field.GetValue(source);
+            if (value == null) continue;
             field.SetValue(target, value);
         }
     }

@@ -16,21 +16,37 @@ public static class IronMaiden
         def.ValuesPerRarity.Legendary = new ValueDef(8, 12, 1);
         def.ValuesPerRarity.Mythic = new ValueDef(10, 15, 1);
         def.Register();
+
+        var icon = SpriteManager.RegisterSprite("iron_maiden.png")!;
         
         SE_IronMaiden? status = ScriptableObject.CreateInstance<SE_IronMaiden>();
         status.name = "SE_IronMaiden";
         status.m_name = "$mod_epicloot_ironmaiden";
         status.m_tooltip = "$mod_epicloot_ironmaiden_desc";
         status.m_ttl = 180f;
+        status.m_addArmor = 5;
+        status.m_icon = icon;
         status.Register();
         
     }
 
     public class SE_IronMaiden : SE_Stats
     {
-        public override void SetLevel(int itemLevel, float skillLevel)
+        public override void Setup(Character character)
         {
-            m_addArmor = skillLevel;
+            base.Setup(character);
+            SetupIronMaiden();
+        }
+
+        public void SetupIronMaiden()
+        {
+            if (m_character is not Player player) return;
+            
+            if (player.HasActiveMagicEffect("IronMaiden", out float modifier))
+            {
+                m_addArmor = modifier;
+                m_name = string.Format(Localization.instance.Localize(m_name), m_addArmor);
+            }
         }
     }
 
@@ -50,7 +66,7 @@ public static class IronMaiden
 
                 if (trigger)
                 {
-                    __instance.GetSEMan().AddStatusEffect("SE_IronMaiden".GetStableHashCode(), true, skillLevel: modifier);
+                    __instance.GetSEMan().AddStatusEffect("SE_IronMaiden".GetStableHashCode(), true);
                     __instance.m_adrenalinePopEffects.Create(__instance.transform.position, Quaternion.identity);
                 }
 

@@ -15,10 +15,10 @@ public class MagicSet
     private const string itemFolderName = "LegendaryItems";
     private const string setFolderName = "LegendarySets";
     private static readonly string folderPath = Path.Combine(Paths.ConfigPath, folderName);
-    private static readonly string legendaryFolderPath = Path.Combine(folderPath, itemFolderName);
+    public static readonly string legendaryFolderPath = Path.Combine(folderPath, itemFolderName);
     private static readonly string setFolderPath = Path.Combine(folderPath, setFolderName);
     private static readonly Dictionary<string, LegendarySetInfo> sets = new();
-    private static readonly Dictionary<string, LegendaryInfo> legendaries = new();
+    public static readonly Dictionary<string, LegendaryInfo> legendaries = new();
 
     public static readonly List<MagicSet> MagicSets = new();
 
@@ -167,7 +167,7 @@ public class MagicSet
     }
     
 
-    private static void DeserializeItem(string filePath)
+    public static void DeserializeItem(string filePath)
     {
         if (!File.Exists(filePath)) return;
         if (!legendaries.TryGetValue(filePath, out LegendaryInfo? sourceItem)) return;

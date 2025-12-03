@@ -8,7 +8,6 @@ using EpicLootAPI;
 using HarmonyLib;
 using JetBrains.Annotations;
 using LocalizationManager;
-using RustyLoot.Sets;
 using ServerSync;
 using UnityEngine;
 
@@ -25,7 +24,7 @@ public enum Toggle
 public class RustyLootPlugin : BaseUnityPlugin
 {
     internal const string ModName = "RustyLoot";
-    internal const string ModVersion = "0.0.01";
+    internal const string ModVersion = "0.0.2";
     internal const string Author = "RustyMods";
     private const string ModGUID = Author + "." + ModName;
     private static readonly string ConfigFileName = ModGUID + ".cfg";
@@ -69,9 +68,6 @@ public class RustyLootPlugin : BaseUnityPlugin
 
         Localizer.Load();
         
-        LogWarning("BETA RustyLoot is loaded!");
-        LogWarning("Enchanting items with RustyLoot effects, then removing mod, will result in empty enchantments");
-        
         EpicLoot.logger.OnWarning += LogWarning;
         EpicLoot.logger.OnError += LogError;
         // EpicLoot.logger.OnDebug += RustyLootLogger.LogDebug;
@@ -92,6 +88,12 @@ public class RustyLootPlugin : BaseUnityPlugin
         _serverConfigLocked = config("1 - General", "Lock Configuration", Toggle.On, "If on, the configuration is locked and can be changed by server admins only.");
         _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
         _addLogs = config("1 - General", "Show logs", Toggle.On, "If on, will show logs to show details of effects");
+    }
+
+    public void SetupLegendaryItems()
+    {
+        Mistweaver.Setup();
+        Hafrnlight.Setup();
     }
 
     public void SetupSets()
@@ -119,6 +121,8 @@ public class RustyLootPlugin : BaseUnityPlugin
         AddArmor.Setup();
         Lifebloom.Setup();
         ForsakenBlow.Setup();
+        Sturdy.Setup();
+        Bleed.Setup();
     }
 
     private void OnDestroy()

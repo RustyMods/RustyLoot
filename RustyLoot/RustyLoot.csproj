@@ -101,7 +101,7 @@
             <HintPath>$(CorlibPath)\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.ImageConversionModule">
-          <HintPath>..\..\Seasonality\Seasonality\Libs\UnityEngine.ImageConversionModule.dll</HintPath>
+          <HintPath>Libs\UnityEngine.ImageConversionModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.IMGUIModule">
             <HintPath>$(CorlibPath)\UnityEngine.IMGUIModule.dll</HintPath>
@@ -137,8 +137,16 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="src\EffectListRef.cs" />
         <Compile Include="src\Extensions.cs" />
+        <Compile Include="src\Legendary.cs" />
+        <Compile Include="src\LegendaryItems\Hafrnlight.cs" />
+        <Compile Include="src\LegendaryItems\Mistweaver.cs" />
+        <Compile Include="src\MagicAbilities\Hrafnstorm.cs" />
+        <Compile Include="src\MagicAbilities\Seidrweaver.cs" />
+        <Compile Include="src\MagicAbilities\Ulfheonar.cs" />
+        <Compile Include="src\MagicAbilities\Wayfarer.cs" />
         <Compile Include="src\MagicEffect.cs" />
         <Compile Include="src\MagicEffects\AddArmor.cs" />
+        <Compile Include="src\MagicEffects\Bleed.cs" />
         <Compile Include="src\MagicEffects\ForsakenBlow.cs" />
         <Compile Include="src\MagicEffects\Honeybound.cs" />
         <Compile Include="src\MagicEffects\IronMaiden.cs" />
@@ -152,44 +160,45 @@
         <Compile Include="src\MagicEffects\Seasoned.cs" />
         <Compile Include="src\MagicEffects\SeaWolf.cs" />
         <Compile Include="src\MagicEffects\ModifyTrinketDuration.cs" />
+        <Compile Include="src\MagicEffects\Sturdy.cs" />
         <Compile Include="src\MagicSet.cs" />
         <Compile Include="src\Sets\Hrafnstorm.cs" />
         <Compile Include="src\Sets\Seidrweaver.cs" />
         <Compile Include="src\Sets\Ulfheonar.cs" />
         <Compile Include="src\Sets\Wayfarer.cs" />
         <Compile Include="src\SyncFiles.cs" />
-        <Compile Include="VersionHandshake.cs"/>
+        <Compile Include="src\WorldText.cs" />
+        <Compile Include="VersionHandshake.cs" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
+        <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include=".gitignore"/>
+        <Content Include=".gitignore" />
         <EmbeddedResource Include="assets\ascension_bundle" />
         <Content Include="assets\ascension_bundle.manifest" />
-        <Content Include="environment.props"/>
+        <Content Include="environment.props" />
         <EmbeddedResource Include="icons\cape_hood_darkyellow.png" />
         <EmbeddedResource Include="icons\bow_wood1.png" />
         <EmbeddedResource Include="icons\bone_skull.png" />
         <EmbeddedResource Include="icons\rejuvenate.png" />
         <EmbeddedResource Include="icons\mushroom_big_red.png" />
-        <Content Include="ILRepack.targets"/>
+        <EmbeddedResource Include="icons\iron_maiden.png" />
+        <Content Include="ILRepack.targets" />
         <Content Include="Libs\EpicLootAPI.dll" />
         <Content Include="Libs\ServerSync.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="Thunderstore\CHANGELOG.md"/>
-        <Content Include="Thunderstore\manifest.json"/>
+        <Content Include="Libs\UnityEngine.ImageConversionModule.dll" />
+        <Content Include="Thunderstore\CHANGELOG.md" />
+        <Content Include="Thunderstore\manifest.json" />
         <EmbeddedResource Include="translations\English.json" />
         <Content Include="Thunderstore\README.md" />
-        <Content Include="UpdateManifest.ps1"/>
+        <Content Include="UpdateManifest.ps1" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2"/>
+        <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="src\MagicAbilities\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <Target Name="CopyOutputDLL" AfterTargets="GetAssemblyVersion">

@@ -175,11 +175,25 @@ public static class MagicProjectiles
 
             if (arrow != null && weapon.m_shared.m_ammoType == arrow.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicArrow", out float _) || !player.HaveEitr(arrowEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, weapon, "MagicArrow", out float _))
+                {
+                    return true;
+                }
+                if (!player.HaveEitr(arrowEitrCost))
+                {
+                    return true;
+                }
             }
             else if (bolt != null && weapon.m_shared.m_ammoType == bolt.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicBolt", out float _) || !player.HaveEitr(boltEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, weapon, "MagicBolt", out float _))
+                {
+                    return true;
+                }
+                if (!player.HaveEitr(boltEitrCost))
+                {
+                    return true;
+                }
             }
             else
             {
@@ -203,12 +217,28 @@ public static class MagicProjectiles
 
             if (arrow != null && arrow.m_itemData.m_shared.m_ammoType == weapon.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicArrow", out float _) || !player.HaveEitr(arrowEitrCost)) return;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, weapon, "MagicArrow", out float _))
+                {
+                    return;
+                }
+
+                if (!player.HaveEitr(arrowEitrCost))
+                {
+                    return;
+                }
                 __result = arrow.m_itemData.Clone();
             }
             else if (bolt != null && bolt.m_itemData.m_shared.m_ammoType == weapon.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicBolt", out float _) || !player.HaveEitr(boltEitrCost)) return;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, weapon, "MagicBolt", out float _))
+                {
+                    return;
+                }
+
+                if (!player.HaveEitr(boltEitrCost))
+                {
+                    return;
+                }
                 __result = bolt.m_itemData.Clone();
             }
         }
@@ -217,31 +247,51 @@ public static class MagicProjectiles
     [HarmonyPatch(typeof(Attack), nameof(Attack.UseAmmo))]
     private static class Attack_UseAmmo_Patch
     {
-        private static bool Prefix(Attack __instance, ref bool __result)
+        private static bool Prefix(Attack __instance, out ItemDrop.ItemData? ammoItem, ref bool __result)
         {
+            ammoItem = __instance.m_character.GetAmmoItem();
             if (!MagicEffect.IsEnabled("MagicArrow") && !MagicEffect.IsEnabled("MagicBolt")) return true;
-
             if (__instance.m_character is not Player player) return true;
-            if (player.GetAmmoItem() is {} ammo && ammo.m_shared.m_ammoType == __instance.m_weapon.m_shared.m_ammoType) return true;
+            if (player.GetAmmoItem() is {} ammo && ammo.m_shared.m_ammoType == __instance.m_weapon.m_shared.m_ammoType && player.GetInventory().ContainsItem(ammo)) return true;
 
             if (arrow != null && __instance.m_weapon.m_shared.m_ammoType == arrow.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, __instance.m_weapon, "MagicArrow", out float _) || !player.HaveEitr(arrowEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, __instance.m_weapon, "MagicArrow", out float _))
+                {
+                    return true;
+                }
+
+                if (!player.HaveEitr(arrowEitrCost))
+                {
+                    return true;
+                }
 
                 __result = true;
-                __instance.m_ammoItem = arrow.m_itemData.Clone();
+                ammoItem = arrow.m_itemData.Clone();
+                __instance.m_ammoItem = ammoItem;
                 player.UseEitr(arrowEitrCost);
             }            
             else if (bolt != null && __instance.m_weapon.m_shared.m_ammoType == bolt.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, __instance.m_weapon, "MagicBolt", out float _) ||
-                    !player.HaveEitr(boltEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, __instance.m_weapon, "MagicBolt", out float _))
+                {
+                    return true;
+                }
+
+                if (!player.HaveEitr(boltEitrCost))
+                {
+                    return true;
+                }
 
                 __result = true;
-                __instance.m_ammoItem = bolt.m_itemData.Clone();
+                ammoItem = bolt.m_itemData.Clone();
+                __instance.m_ammoItem = ammoItem;
                 player.UseEitr(boltEitrCost);
             }
-            else return true;
+            else
+            {
+                return true;
+            }
             
             return false;
         }
@@ -256,17 +306,40 @@ public static class MagicProjectiles
 
             if (character is not Player player) return true;
 
-            if (player.GetInventory().GetAmmoItem(weapon.m_shared.m_ammoType) is {} ammo && ammo.m_shared.m_ammoType == weapon.m_shared.m_ammoType) return true;
+            if (player.GetInventory().GetAmmoItem(weapon.m_shared.m_ammoType) is { } ammo &&
+                ammo.m_shared.m_ammoType == weapon.m_shared.m_ammoType)
+            {
+                return true;
+            }
             
             if (arrow != null && weapon.m_shared.m_ammoType == arrow.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicArrow", out float _) || !player.HaveEitr(arrowEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, weapon, "MagicArrow", out float _))
+                {
+                    return true;
+                }
+
+                if (!player.HaveEitr(arrowEitrCost))
+                {
+                    return true;
+                }
             }
             else if (bolt != null && weapon.m_shared.m_ammoType == bolt.m_itemData.m_shared.m_ammoType)
             {
-                if (!EpicLoot.HasActiveMagicEffectOnWeapon(player, weapon, "MagicBolt", out float _) || !player.HaveEitr(boltEitrCost)) return true;
+                if (!EpicLoot.HasActiveMagicEffectOnWeapon(null, weapon, "MagicBolt", out float _))
+                {
+                    return true;
+                }
+
+                if (!player.HaveEitr(boltEitrCost))
+                {
+                    return true;
+                }
             }
-            else return true;
+            else
+            {
+                return true;
+            }
             
             __result = true;
             return false;

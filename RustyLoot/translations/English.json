@@ -8,8 +8,8 @@
   "mod_epicloot_magicbolt": "Magic Bolt",
   "mod_epicloot_magicbolt_desc": "Crossbow can form a magic bolt using eitr",
 
-  "mod_epicloot_seasonality": "Seasonality +{0:0.#}%",
-  "mod_epicloot_seasonality_desc": "Summer never gets cold; spring increases harvest, chance to take effect <color=yellow>X</color>%; fall reduces fall damage by <color=yellow>X</color>%; winter never gets wet",
+  "mod_epicloot_seasoned": "Seasoned +{0:0.#}%",
+  "mod_epicloot_seasoned_desc": "Summer never gets cold; spring increases harvest, chance to take effect <color=yellow>X</color>%; fall reduces fall damage by <color=yellow>X</color>%; winter never gets wet",
 
   "mod_epicloot_removemist": "Mist Vision",
   "mod_epicloot_removemist_desc": "Clears mistland's mist",
@@ -30,7 +30,7 @@
   "mod_epicloot_ironmaiden_desc": "If total incurred damage is over 25% of max health, gain <color=yellow>X</color> bonus armor",
 
   "mod_epicloot_rejuvenate": "Rejuvenate +{0:0.#}%",
-  "mod_epicloot_rejuvenate_desc": "<color=yellow>X</color>% chance to heal 15% of total damage dealt over 12 seconds",
+  "mod_epicloot_rejuvenate_desc": "<color=yellow>X</color>% chance to heal 15% of total health dealt over 12 seconds",
 
   "mod_epicloot_honeybound": "Honeybound +{0:0.#}%",
   "mod_epicloot_honeybound_desc": "Increase food duration by <color=yellow>X</color>%",
@@ -43,6 +43,19 @@
   
   "mod_epicloot_forsakenblow": "Forsaken Blow",
   "mod_epicloot_forsakenblow_desc": "Reduce guardian power cooldown by <color=yellow>X</color> seconds per attack blocked",
+  
+  "mod_epicloot_sturdy": "Sturdy +{0:0.#}%",
+  "mod_epicloot_sturdy_desc": "Reduce crossbow pushback force by <color=yellow>X</color>%",
+  
+  "mod_epicloot_bleed_msg": "Bleed",
+  "mod_epicloot_bleed": "Bleed +{0:0.#}%",
+  "mod_epicloot_bleed_desc": "<color=yellow>X</color>% chance to inflict Bleed. Each hit increases the stack and refreshes its duration (max 10 stacks, ticking every second).",
+  
+  "mod_epicloot_mistweaver": "Mistweaver",
+  "mod_epicloot_mistweaver_desc": "Light as vapor yet strong as yew, the bow’s wood ripples with swirling patterns that dance in dim light.",
+  
+  "mod_epicloot_hafrnlight": "Hafrnlight",
+  "mod_epicloot_hafrnlight_desc": "Blessed by Odin’s ravens, this wisp guides the lost and scatters the cursed fog that hides the Mistlands.",
   
   "mod_epicloot_wayfarer": "Wayfarer",
   "mod_epicloot_wayfarer_desc": "Wayfarer [Activated]: Increases carry weight and removes movement speed penalties for 5min. Cooldown 10min",

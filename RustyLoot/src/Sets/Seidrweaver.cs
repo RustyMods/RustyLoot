@@ -4,9 +4,9 @@ using HarmonyLib;
 using RustyLoot.Managers;
 using UnityEngine;
 
-namespace RustyLoot.Sets;
+namespace RustyLoot;
 
-public static class Seidrweaver
+public static partial class Seidrweaver
 {
     public static void Setup()
     {
@@ -16,7 +16,7 @@ public static class Seidrweaver
         se.name = "SE_Seidrweaver";
         se.m_name = "$mod_epicloot_siedrweaver";
         se.m_tooltip = "$mod_epicloot_siedrweaver_desc";
-        se.m_healthOverTime = 100f;
+        se.m_healthOverTime = 200f;
         se.m_healthOverTimeInterval = 1f;
         se.m_ttl = 120f;
         se.m_icon =  icon;
@@ -62,35 +62,5 @@ public static class Seidrweaver
         effectDef.Requirements.NoRoll = true;
         effectDef.Ability = "Siedrweaver";
         effectDef.Register();
-    }
-
-    public class SE_Seidrweaver : SE_Stats
-    {
-        
-    }
-
-    public static EffectListRef healEffect = new("fx_DvergerMage_Nova_ring");
-    
-    public class SiedrweaverProxy : Proxy
-    {
-        public override void Activate()
-        {
-            if (!Player.HaveEitr(30))
-            {
-                Hud.instance.EitrBarEmptyFlash();
-                return;
-            }
-            if (IsOnCooldown()) return;
-            SetCooldownEndTime(GetTime() + Cooldown);
-            List<Player> list = new List<Player>();
-            Player.GetPlayersInRange(Player.transform.position, 50f, list);
-            list.Add(Player);
-            foreach (Player? player in list)
-            {
-                player.GetSEMan().AddStatusEffect("SE_Seidrweaver".GetStableHashCode(), true);
-            }
-
-            healEffect.Create(Player.GetHeadPoint(), Quaternion.identity);
-        }
     }
 }
