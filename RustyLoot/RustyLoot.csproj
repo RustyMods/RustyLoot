@@ -160,6 +160,7 @@
         <Compile Include="src\MagicEffects\Seasoned.cs" />
         <Compile Include="src\MagicEffects\SeaWolf.cs" />
         <Compile Include="src\MagicEffects\ModifyTrinketDuration.cs" />
+        <Compile Include="src\MagicEffects\StaminaLeech.cs" />
         <Compile Include="src\MagicEffects\Sturdy.cs" />
         <Compile Include="src\MagicSet.cs" />
         <Compile Include="src\Sets\Hrafnstorm.cs" />

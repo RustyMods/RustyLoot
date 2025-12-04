@@ -123,6 +123,7 @@ public class RustyLootPlugin : BaseUnityPlugin
         ForsakenBlow.Setup();
         Sturdy.Setup();
         Bleed.Setup();
+        StaminaLeech.Setup();
     }
 
     private void OnDestroy()

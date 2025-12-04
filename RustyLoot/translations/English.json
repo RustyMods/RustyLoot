@@ -24,7 +24,7 @@
   "mod_epicloot_modifytrinketduration_desc": "Increase trinket duration by <color=yellow>X</color>%",
 
   "mod_epicloot_seawolf": "Sea Wolf +{0:0.#}%",
-  "mod_epicloot_seawolf_desc": "Total damage increased by <color=yellow>X</color>% while it is raining",
+  "mod_epicloot_seawolf_desc": "Total damage increased by <color=yellow>X</color>% while wet",
 
   "mod_epicloot_ironmaiden": "Iron Maiden +{0:0.#}",
   "mod_epicloot_ironmaiden_desc": "If total incurred damage is over 25% of max health, gain <color=yellow>X</color> bonus armor",
@@ -50,6 +50,9 @@
   "mod_epicloot_bleed_msg": "Bleed",
   "mod_epicloot_bleed": "Bleed +{0:0.#}%",
   "mod_epicloot_bleed_desc": "<color=yellow>X</color>% chance to inflict Bleed. Each hit increases the stack and refreshes its duration (max 10 stacks, ticking every second).",
+  
+  "mod_epicloot_staminaleech": "Stamina Leech +{0:0.#}%",
+  "mod_epicloot_staminaleech_desc": "Recover <color=yellow>X</color>% of your attack's stamina cost when hitting enemies.",
   
   "mod_epicloot_mistweaver": "Mistweaver",
   "mod_epicloot_mistweaver_desc": "Light as vapor yet strong as yew, the bow’s wood ripples with swirling patterns that dance in dim light.",
