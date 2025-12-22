@@ -101,7 +101,7 @@ public class RustyLootPlugin : BaseUnityPlugin
         Wayfarer.Setup();
         Hrafnstorm.Setup();
         Ulfheonar.Setup();
-        Seidrweaver.Setup();
+        Siedrweaver.Setup();
     }
 
     public void SetupMagicEffects()

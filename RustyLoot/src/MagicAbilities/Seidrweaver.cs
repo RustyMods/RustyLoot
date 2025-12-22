@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace RustyLoot;
 
-public static partial class Seidrweaver
+public static partial class Siedrweaver
 {
     private static readonly EffectListRef healEffect = new("fx_DvergerMage_Nova_ring");
-    public class SE_Seidrweaver : SE_Stats
+    public class SE_Siedrweaver : SE_Stats
     {
         
     }
@@ -33,6 +33,7 @@ public static partial class Seidrweaver
             }
 
             healEffect.Create(Player.GetHeadPoint(), Quaternion.identity);
+            Player.UseEitr(30);
         }
     }
 }

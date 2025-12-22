@@ -26,7 +26,7 @@ public static class PiercingShot
 
             __instance.m_onHit += (collider, point, water) =>
             {
-                if (water) return;
+                if (water || !collider.GetComponentInParent<Character>()) return;
 
                 string normalizedName = __instance.name.Replace("(Clone)", string.Empty);
                 GameObject? prefab = ZNetScene.instance.GetPrefab(normalizedName);

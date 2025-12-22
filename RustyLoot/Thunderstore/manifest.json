@@ -1,11 +1,11 @@
 {
   "name": "RustyLoot",
-  "version_number": "1.0.0",
-  "website_url": "",
+  "version_number": "0.0.1",
+  "website_url": "https://github.com/RustyMods/RustyLoot",
   "description": "Adds new magic effects for EpicLoot v0.12++",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2333",
-    "RandyKnapp-EpicLoot-0.12.2",
+    "RandyKnapp-EpicLoot-0.12.4",
     "ValheimModding-JsonDotNET-13.0.4"
   ]
 }

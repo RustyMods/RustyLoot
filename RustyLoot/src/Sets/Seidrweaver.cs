@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace RustyLoot;
 
-public static partial class Seidrweaver
+public static partial class Siedrweaver
 {
     public static void Setup()
     {
         var icon = SpriteManager.RegisterSprite("mushroom_big_red.png")!;
         
-        var se = ScriptableObject.CreateInstance<SE_Seidrweaver>();
+        var se = ScriptableObject.CreateInstance<SE_Siedrweaver>();
         se.name = "SE_Seidrweaver";
         se.m_name = "$mod_epicloot_siedrweaver";
         se.m_tooltip = "$mod_epicloot_siedrweaver_desc";
